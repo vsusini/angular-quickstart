@@ -2,15 +2,18 @@ const express = require('express');
 const request = require('request');
 const path = require('path');
 const cors = require('cors')
-const port = process.env.PORT || 4500;
+// const port = process.env.PORT || 4500;
 var bodyParser = require('body-parser')
 const app = express();
 const publicPath = path.join(__dirname, "/dist/rs-dashboard/")
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
+const apiRoute = "/.netlify/functions/server/api";
 
 // parse application/json
 app.use(bodyParser.json())
+const router = express.Router();
+app.use(apiRoute, router);
 
 // middle ware
 app.use(express.static(publicPath));
@@ -34,8 +37,6 @@ app.post('/getAccount', (req, res) => {
     )
   });
 
-app.listen(port, () => {
-    console.log('server is running at port ' + port);
-})
-
-module.exports.handler = serverless(app);
+// app.listen(port, () => {
+//     console.log('server is running at port ' + port);
+// })

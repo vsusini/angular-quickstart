@@ -13,7 +13,7 @@ export class DataCollectionService {
 
   getWalletData(){
     const formData = new FormData();
-    var url = "http://localhost:4500/getAccount"
+    var url = "/.netlify/functions/server/api/getAccount"
     formData.append("wallet", "f1ip452DtnWLzrZ2YiF8NRjrjwpM4zSo5QRhcuRJSvC")
     var response = axios.post(url, formData, {headers: { "Content-Type":"application/json"  }})
     .then(parsedRes =>{
