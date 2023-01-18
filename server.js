@@ -1,4 +1,4 @@
-
+const serverless = require('serverless-http')
 // server.js
 
 const app = require("./express/server");
