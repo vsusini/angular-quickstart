@@ -13,7 +13,6 @@ const apiRoute = "/.netlify/functions/server/api";
 // parse application/json
 app.use(bodyParser.json())
 const router = express.Router();
-app.use(apiRoute, router);
 
 // middle ware
 app.use(express.static(publicPath));
@@ -22,6 +21,12 @@ app.use(cors()); // it enables all cors requests
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(publicPath, 'index.html'));
+});
+
+router.get("/test", (req, res) => {
+    res
+      .status(200)
+      .json({message: 'Endpoint is working' });
 });
 
 app.post('/getAccount', (req, res) => {
@@ -37,6 +42,10 @@ app.post('/getAccount', (req, res) => {
     )
   });
 
+app.use(apiRoute, router);
+
 // app.listen(port, () => {
 //     console.log('server is running at port ' + port);
 // })
+
+module.exports.handler = serverless(app);
