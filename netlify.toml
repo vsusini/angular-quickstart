@@ -1,6 +1,7 @@
 [build]
-  command="ng build && npm run start-server"
+  command="ng build-server"
   publish="dist/angular-quickstart"
+  functions = "functions"
 
 [[redirects]]
   from = "/*"
