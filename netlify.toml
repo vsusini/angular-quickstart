@@ -1,5 +1,5 @@
 [build]
-  command="ng build-server"
+  command="npm run build-server"
   publish="dist/angular-quickstart"
   functions = "functions"
 
