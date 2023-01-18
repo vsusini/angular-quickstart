@@ -1,5 +1,5 @@
 [build]
-  command="ng build && cd ../ && npm start-server"
+  command="ng build && cd ../ && npm run start-server"
   publish="dist/angular-quickstart"
 
 [[redirects]]
