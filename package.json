@@ -2,7 +2,7 @@
   "name": "angular-quickstart",
   "version": "0.0.0",
   "scripts": {
-    "build-server": "npm install && ng build --prod && cd ../ && netlify-lambda build express",
+    "build-server": "npm install && ng build --prod && netlify-lambda build express",
     "ng": "ng",
     "start": "ng serve",
     "start-server": "node server.js",
