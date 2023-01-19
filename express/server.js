@@ -6,7 +6,7 @@ const serverless = require('serverless-http')
 // const port = process.env.PORT || 4500;
 var bodyParser = require('body-parser')
 const app = express();
-const publicPath = path.join(__dirname, "/dist/rs-dashboard/")
+const publicPath = path.join(__dirname, "/dist/angular-quickstart/")
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
 
@@ -44,9 +44,9 @@ router.post('/getAccount', (req, res) => {
 
 app.use(bodyParser.json());
 app.use('/.netlify/functions/server', router);  // path must route to lambda
-// app.get('*', (req, res) => {
-//     res.sendFile(path.join(publicPath, 'index.html'));
-// });
+app.get('*', (req, res) => {
+    res.sendFile(path.join(publicPath, 'index.html'));
+});
 
 // app.listen(port, () => {
 //     console.log('server is running at port ' + port);
