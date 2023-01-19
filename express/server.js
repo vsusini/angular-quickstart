@@ -9,7 +9,6 @@ const app = express();
 const publicPath = path.join(__dirname, "/dist/rs-dashboard/")
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
-const apiRoute = "/.netlify/functions/server/api";
 
 // parse application/json
 app.use(bodyParser.json())
@@ -20,16 +19,6 @@ app.use(express.static(publicPath));
 app.use(express.static('public')); //to access the files in public folder
 app.use(cors()); // it enables all cors requests
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(publicPath, 'index.html'));
-});
-
-router.get("/test", (req, res) => {
-    res
-      .status(200)
-      .json({message: 'Endpoint is working' });
-});
-
 app.post('/getAccount', (req, res) => {
     request(
       { url: 'http://public-api.solscan.io/account/' + req.body.wallet},
@@ -37,16 +26,21 @@ app.post('/getAccount', (req, res) => {
         if (error || response.statusCode !== 200) {
           return res.status(500).json({ type: 'error', message: err.message });
         }
-  
         res.json(JSON.parse(body));
       }
     )
   });
 
-app.use(apiRoute, router);
+app.use(bodyParser.json());
+app.use('/.netlify/functions/server', router);  // path must route to lambda
+app.get('*', (req, res) => {
+    res.sendFile(path.join(publicPath, 'index.html'));
+});
 
 // app.listen(port, () => {
 //     console.log('server is running at port ' + port);
 // })
 
 module.exports = app;
+
+module.exports.handler = serverless(app);
