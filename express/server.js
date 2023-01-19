@@ -19,23 +19,34 @@ app.use(express.static(publicPath));
 app.use(express.static('public')); //to access the files in public folder
 app.use(cors()); // it enables all cors requests
 
-app.post('/getAccount', (req, res) => {
-    request(
-      { url: 'http://public-api.solscan.io/account/' + req.body.wallet},
-      (error, response, body) => {
-        if (error || response.statusCode !== 200) {
-          return res.status(500).json({ type: 'error', message: err.message });
-        }
-        res.json(JSON.parse(body));
-      }
-    )
-  });
+// app.post('/getAccount', (req, res) => {
+//     request(
+//       { url: 'http://public-api.solscan.io/account/' + req.body.wallet},
+//       (error, response, body) => {
+//         if (error || response.statusCode !== 200) {
+//           return res.status(500).json({ type: 'error', message: err.message });
+//         }
+//         res.json(JSON.parse(body));
+//       }
+//     )
+//   });
+router.post('/getAccount', (req, res) => {
+        request(
+          { url: 'http://public-api.solscan.io/account/' + req.body.wallet},
+          (error, response, body) => {
+            if (error || response.statusCode !== 200) {
+              return res.status(500).json({ type: 'error', message: err.message });
+            }
+            res.json(JSON.parse(body));
+          }
+        )
+      });
 
 app.use(bodyParser.json());
 app.use('/.netlify/functions/server', router);  // path must route to lambda
-app.get('*', (req, res) => {
-    res.sendFile(path.join(publicPath, 'index.html'));
-});
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(publicPath, 'index.html'));
+// });
 
 // app.listen(port, () => {
 //     console.log('server is running at port ' + port);
